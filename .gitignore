@@ -1,0 +1,6 @@
+data/
+*.rds
+*.rda
+*.RData
+*.Rhistory
+.DS_Store

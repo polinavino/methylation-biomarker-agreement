@@ -67,8 +67,8 @@ We evaluate four published smoking methylation signatures:
 
 | GEO accession | N | Platform | Smoking groups | Reference |
 |---------------|---|----------|----------------|-----------|
-| GSE50660 | 464 | 450k | Never/Former/Current | Liu et al. 2013 |
-| GSE110043 | 94 | 450k | Never/Former/Current | TBC |
+| GSE50660 | 464 | 450k | Never (179) / Former (263) / Current (22) | Liu et al. 2013 |
+| GSE42861 | 689 | 450k | Never (193) / Ex (228) / Current (200) / Occasional (66) | Liu et al. 2013 (RA study) |
 
 ## Methods
 
@@ -103,7 +103,7 @@ among them.
 
 - [x] Repository initialized
 - [x] GSE50660 downloaded (n=464, never/former/current smokers)
-- [ ] GSE110043 downloaded
+- [x] GSE42861 downloaded (n=689, rheumatoid arthritis cohort with smoking labels)
 - [ ] Preprocessing and normalization
 - [ ] Signature score computation
 - [ ] Agreement analysis
