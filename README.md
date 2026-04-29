@@ -99,12 +99,69 @@ instability in biological measurement — applicable wherever multiple definitio
 of the same biological concept coexist without a principled basis for choosing
 among them.
 
+## Results
+
+### Signature correlations
+
+All four signatures are highly correlated across both cohorts (r = 0.81-0.97),
+indicating broad agreement. This contrasts with the kinase selectivity setting
+where definitions clustered into two distinct families (r = 0.27-0.48 between
+families). Smoking methylation signatures are more concordant than kinase
+selectivity definitions, likely because they are all derived from overlapping
+CpG sets anchored by AHRR.
+
+### C1 — Sensitivity threshold
+
+All signatures show the expected never > former > current gradient. AHRR has
+the largest dynamic range (gap = 0.244 between never and current smokers) while
+EpiTob has the smallest (gap = 0.081). Former smoker scores cluster much closer
+to never smokers than to current smokers across all signatures, suggesting a
+reliability threshold issue for former smoker classification.
+
+### C3 — Cross-cohort consistency
+
+| Smoking group | N | Signatures agree | Agreement rate |
+|---------------|---|-----------------|----------------|
+| Current smokers | 222 | 183 | 82% |
+| Former smokers | 491 | 350 | 71% |
+| Never smokers | 372 | 358 | 96% |
+
+Former smokers show the highest rate of inconsistent classification (29%) —
+nearly 1 in 3 former smokers is classified differently by different signatures.
+This is the primary failure mode of existing smoking methylation biomarkers and
+directly parallels the instability observed for intermediate-selectivity compounds
+in the kinase selectivity paper.
+
+### C4 — Monotonicity
+
+All four signatures pass monotonicity in both cohorts — current smokers always
+score lower than former smokers, who always score lower than never smokers.
+No violations observed.
+
+### C2 — Score stability
+
+AHRR single-CpG correlates r = 0.826-0.922 with multi-CpG signatures. Adding
+more CpGs changes rankings enough to produce disagreements, particularly in the
+former smoker range where scores are most ambiguous.
+
+### Key finding
+
+Signatures agree on clear cases (never smokers 96%, current smokers 82%) but
+diverge substantially on former smokers (71% agreement). This is a C1 violation
+— below a certain cumulative exposure history, classification becomes unreliable
+and signature-dependent. The disagreement is consistent across cohorts (not
+batch-specific) and is driven by biological heterogeneity in methylation recovery
+after smoking cessation. Different signatures weight that recovery differently
+because they use different CpG sets with different rates of methylation reversal.
+
 ## Status
 
 - [x] Repository initialized
 - [x] GSE50660 downloaded (n=464, never/former/current smokers)
 - [x] GSE42861 downloaded (n=689, rheumatoid arthritis cohort with smoking labels)
-- [ ] Preprocessing and normalization
-- [ ] Signature score computation
-- [ ] Agreement analysis
-- [ ] Figures and writeup
+- [x] Preprocessing and signature CpG extraction
+- [x] Signature score computation (AHRR, EpiSmoke, Joehanes, EpiTob)
+- [x] Agreement analysis (C1-C4 framework)
+- [x] Figures
+- [ ] Extension to air pollution or stress methylation datasets
+- [ ] Formal writeup
