@@ -21,8 +21,10 @@ show sensitivity threshold violations (C1) at low cumulative exposure. The
 divergence is consistent across cohorts and driven by biological heterogeneity
 in methylation recovery after smoking cessation. This framework is intended as
 a generalizable tool for evaluating biomarker agreement in settings where
-ground truth is unavailable, with planned application to fetal alcohol spectrum
-disorder methylation signatures.
+ground truth is unavailable. We then apply it to fetal alcohol spectrum disorder
+signatures (Section 6), where the dominant failure mode is poor cross-tissue
+transfer: buccal-derived signatures carry only a weak signal in blood and do not
+track severity there, while a blood-native episignature does both.
 
 ---
 
@@ -102,7 +104,8 @@ We used two publicly available whole-blood 450k methylation datasets:
   current (n=200), occasional (n=66).
 
 Beta values were extracted directly from GEO series matrix files using GEOquery.
-Only CpG sites present in all four signatures were retained (n=12 CpGs).
+The union of CpG sites across the four signatures was retained (n=12 CpGs; EpiTob
+is a superset of the other three).
 
 ### 3.2 Signatures
 
@@ -208,11 +211,101 @@ composition is a known confounder of blood methylation and may contribute to
 disagreement among signatures. Full re-analysis from IDAT files with cell-type
 deconvolution is planned.
 
-**Future directions:** We plan to apply this framework to fetal alcohol spectrum
-disorder (FASD) methylation signatures, where multiple proposed biomarker
-signatures exist but cross-cohort validation is limited by restricted data
-access. The smoking methylation demonstration establishes the technical
-methodology and provides a benchmark for interpreting FASD signature agreement.
+**Future directions:** The framework is applied to fetal alcohol spectrum
+disorder (FASD) methylation signatures in Section 6. The smoking demonstration
+establishes the technical methodology and provides a within-tissue benchmark
+against which the FASD (cross-tissue) results are interpreted.
+
+---
+
+## 6. FASD extension: a reliability audit
+
+### 6.1 Motivation and framing
+
+FASD is the framework's intended target. Multiple blood/buccal DNAm signatures
+now exist, but cross-cohort validation has been limited by data access. Enough is
+now public to run a reliability audit. We frame it deliberately as an audit of
+*limits*: it concerns molecular classification in **already-diagnosed children**
+(postnatal blood), which is tractable, and it makes no claim toward a prenatal or
+at-birth exposure screen. The latter is not supported by evidence — the PACE
+cord-blood meta-analysis (Sharp et al., 2018; 1,147 exposed / 1,928 controls)
+found no CpGs surviving multiple-testing correction for maternal alcohol — and
+would carry serious false-positive and stigma/child-protection risks.
+
+### 6.2 Data and signatures
+
+Two peripheral-blood 450k cohorts from the Amsterdam AMC group (SuperSeries
+GSE113018; PMID 30873861): **GSE112987** (discovery, n=103; 39 FASD / 64 control)
+and **GSE113012** (replication, n=35; 7 FASD / 28 control). Each FASD case carries
+the three clinical diagnostic domains (facial, CNS, growth; scored 1–4).
+
+Four published signatures were scored: Portales-Casamar (657 CpGs, buccal),
+Lussier validated (161, buccal), Lussier predictor (183, buccal), and van der
+Laan (204, **blood** episignature). The Lussier sets are 100% nested within
+Portales (agreement partly by construction → the C2 test); van der Laan shares
+~0 probes with the buccal sets (a genuine cross-tissue convergent-validity test).
+
+### 6.3 Methods
+
+FASD signatures are mixed-direction, so the smoking mean-beta score is invalid.
+We used a directional z-score, `score = mean_i(sign_i · z_i)`, higher = more
+FASD-like, with per-CpG signs estimated on the discovery cohort and applied fixed
+to replication (so replication is scored out-of-sample). Blood cell composition
+was estimated with EpiDISH (RPC, DHS blood reference) as a confound check. AUC
+was computed via the Mann-Whitney identity.
+
+### 6.4 Results
+
+- **C1 (separation).** The blood-native van der Laan signature separates FASD from
+  control strongly (AUC 0.93 discovery / 0.96 replication; d 2.6 / 3.2). Buccal
+  signatures transfer poorly to blood (AUC 0.68–0.79; d 0.7–1.2). Separation is
+  weaker for milder cases across all signatures.
+- **C2 (stability).** Nested signatures agree almost perfectly (Spearman 0.96) —
+  largely by construction — whereas the independent cross-tissue pair agrees only
+  moderately (0.38).
+- **C3 (consistency).** Signatures classify controls concordantly (98% / 82%) but
+  diverge on cases (36% / 0% of cases classified identically by all four).
+- **C4 (monotonicity).** van der Laan tracks clinical severity (Spearman 0.42–0.54
+  with facial/CNS/growth); buccal signatures are flat (0.02–0.26).
+- **Cross-tissue convergent validity.** van der Laan vs Lussier (near-zero shared
+  probes) correlate only 0.43 / 0.16, despite both targeting FASD.
+- **Confound check.** Inter-signature disagreement barely tracks cell fractions
+  (|Spearman| ≤ 0.14), so it is not a cell-composition artifact. (FASD cases do
+  differ in composition — higher B/CD4T, lower neutrophils — a caveat for the
+  signal itself, distinct from the disagreement.)
+
+### 6.5 Interpretation
+
+Where the smoking analysis found disagreement concentrated in an intermediate
+*within-tissue* zone (former smokers), the dominant FASD failure mode is
+**poor cross-tissue transfer**: buccal-derived signatures carry only a weak,
+above-chance signal in blood (AUC 0.68–0.79) and do not track its severity there,
+while the blood-native episignature separates cases strongly and is monotone with
+severity. The practical read-out is not "FASD DNAm classification fails" but
+"signature validity is tissue-bound" — a signature must be applied in, or
+explicitly re-validated for, the tissue it is used on.
+
+**Caveats.** (i) The replication cohort is small (7 FASD); effect sizes should be
+read with the discovery cohort (n=39) carrying the weight. (ii) Per-CpG
+directions were estimated empirically (blood) rather than from the published
+buccal Δβ tables; published-direction concordance is a future refinement.
+(iii) **Non-independence of the van der Laan signature (important).** The
+corresponding author of van der Laan et al. (2025), Peter Henneman (Amsterdam
+UMC), is also the depositor of GSE112987/GSE113012 (PMID 30873861); several
+co-authors share that affiliation. The two are the same laboratory, same tissue
+(peripheral blood 450K), and overlapping timeframe, and van der Laan's 93-case
+FAS cohort is the natural superset of the earlier Amsterdam blood FASD samples
+(~46 cases). We could not obtain the per-sample table to confirm exact reuse (the
+main text is access-restricted), but **sample overlap cannot be excluded and is
+the default expectation.** Consequently, van der Laan's strong performance here
+(AUC 0.93–0.96) may be partly circular — the signature is likely being evaluated
+on some of its own training data — and should be read as an **upper bound**, not
+clean out-of-sample validation. This does *not* affect the two findings that do
+not depend on it: (a) the buccal signatures (Portales-Casamar, Lussier) are
+independent of these cohorts and still transfer poorly to blood; and (b)
+between-signature agreement (C2/C3, cross-tissue) is invariant to which signature
+performs best. It does temper the "blood-native signature clearly wins" framing
+and inflates part of the cross-tissue disagreement magnitude.
 
 ---
 
@@ -226,6 +319,14 @@ methodology and provides a benchmark for interpreting FASD signature agreement.
   Circ Cardiovasc Genet.
 - Liu Y et al. (2013). Epigenome-wide association data implicate DNA methylation
   as an intermediary of genetic risk in rheumatoid arthritis. Nat Biotechnol.
+- Lussier AA et al. (2018). DNA methylation as a predictor of fetal alcohol
+  spectrum disorder. Clin Epigenetics 10:5.
+- Portales-Casamar E et al. (2016). DNA methylation signature of human fetal
+  alcohol spectrum disorder. Epigenetics & Chromatin 9:25.
+- Sharp GC et al. (2018; PACE Consortium). Maternal alcohol consumption and
+  offspring DNA methylation: findings from six general population birth cohorts.
+- van der Laan L et al. (2025). Discovery of a DNA methylation episignature as a
+  molecular biomarker for fetal alcohol syndrome. Genet Med 27(12):101586.
 - Shenker NS et al. (2013). Epigenome-wide association study in the European
   Prospective Investigation into Cancer and Nutrition (EPIC-Turin) cohort.
   PLoS One.

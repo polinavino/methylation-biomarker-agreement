@@ -15,8 +15,8 @@ compute_scores <- function(beta, pheno, sigs) {
     # lower score = more likely smoker
     epismoke_score <- colMeans(beta[sigs$epismoke, ])
 
-    # Joehanes — weighted sum using effect size direction
-    # all top CpGs are hypomethylated in smokers so mean works
+    # Joehanes — mean of the top-ranked CpG subset. All are hypomethylated in
+    # smokers, so an unweighted mean beta is an adequate score (no weighting).
     joehanes_score <- colMeans(beta[sigs$joehanes, ])
 
     # EpiTob — mean of signature CpGs
