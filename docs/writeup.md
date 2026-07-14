@@ -257,9 +257,12 @@ was computed via the Mann-Whitney identity.
 ### 6.4 Results
 
 - **C1 (separation).** The blood-native van der Laan signature separates FASD from
-  control strongly (AUC 0.93 discovery / 0.96 replication; d 2.6 / 3.2). Buccal
-  signatures transfer poorly to blood (AUC 0.68–0.79; d 0.7–1.2). Separation is
-  weaker for milder cases across all signatures.
+  control strongly (AUC 0.93 discovery / 0.96 replication; d 2.6 / 3.2) — but this
+  is **not independent validation** (confirmed same-individual overlap with the
+  2025 derivation cohort; see caveat iii), so read it as an upper bound. Buccal
+  signatures (genuinely independent of these cohorts) transfer poorly to blood
+  (AUC 0.68–0.79; d 0.7–1.2). Separation is weaker for milder cases across all
+  signatures.
 - **C2 (stability).** Nested signatures agree almost perfectly (Spearman 0.96) —
   largely by construction — whereas the independent cross-tissue pair agrees only
   moderately (0.38).
@@ -289,23 +292,34 @@ explicitly re-validated for, the tissue it is used on.
 read with the discovery cohort (n=39) carrying the weight. (ii) Per-CpG
 directions were estimated empirically (blood) rather than from the published
 buccal Δβ tables; published-direction concordance is a future refinement.
-(iii) **Non-independence of the van der Laan signature (important).** The
+(iii) **Non-independence of the van der Laan signature (important; confirmed).** The
 corresponding author of van der Laan et al. (2025), Peter Henneman (Amsterdam
-UMC), is also the depositor of GSE112987/GSE113012 (PMID 30873861); several
-co-authors share that affiliation. The two are the same laboratory, same tissue
-(peripheral blood 450K), and overlapping timeframe, and van der Laan's 93-case
-FAS cohort is the natural superset of the earlier Amsterdam blood FASD samples
-(~46 cases). We could not obtain the per-sample table to confirm exact reuse (the
-main text is access-restricted), but **sample overlap cannot be excluded and is
-the default expectation.** Consequently, van der Laan's strong performance here
-(AUC 0.93–0.96) may be partly circular — the signature is likely being evaluated
-on some of its own training data — and should be read as an **upper bound**, not
-clean out-of-sample validation. This does *not* affect the two findings that do
-not depend on it: (a) the buccal signatures (Portales-Casamar, Lussier) are
-independent of these cohorts and still transfer poorly to blood; and (b)
-between-signature agreement (C2/C3, cross-tissue) is invariant to which signature
-performs best. It does temper the "blood-native signature clearly wins" framing
-and inflates part of the cross-tissue disagreement magnitude.
+UMC), is also the depositor of GSE112987/GSE113012 (PMID 30873861). **Overlap is
+now confirmed by the corresponding author** (P. Henneman, personal communication,
+July 2026): the earlier 450K cohort deposited as GSE112987/GSE113012 (published in
+*Epigenomics* 2019) was included in the cohort used to derive the 2025
+episignature, and a substantial number of those patients were re-profiled on the
+EPIC array for the 2025 work; the only additional 2025 samples came from a
+collaborator in Spain. The 2025 derivation cohort is thus essentially a **superset
+of the individuals scored here.** The circularity is at the **individual** level:
+the episignature was derived on (at least most of) the same people it is scored on.
+One nuance — because many individuals were re-profiled on a *different* platform
+(EPIC) for 2025 while we score the deposited **450K** data, this is
+same-individual / cross-platform overlap rather than reuse of identical arrays, so
+the technical (batch/array) noise is partly independent; but the signal an
+episignature exploits is the individuals' biology, which is shared. Consequently
+van der Laan's strong performance here (AUC 0.93–0.96) is **not independent
+validation and should not be reported as such** — it is an **upper bound**
+reflecting a partly circular, same-individual evaluation. An exact per-sample
+overlap count, and whether *any* scored individuals were held out of the 2025
+derivation (training and CpG selection), remain to be confirmed (follow-up in
+progress); absent a clean held-out subset, no independent AUC can be computed on
+these cohorts. This does *not* affect the two findings that do not depend on it:
+(a) the buccal signatures (Portales-Casamar, Lussier) are independent of these
+cohorts and still transfer poorly to blood; and (b) between-signature agreement
+(C2/C3, cross-tissue) is invariant to which signature performs best. It does
+temper the "blood-native signature clearly wins" framing and inflates part of the
+cross-tissue disagreement magnitude.
 
 ---
 

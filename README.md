@@ -223,10 +223,12 @@ with EpiDISH (RPC, DHS blood reference) as a confound check.
 
 - **C1 (separation).** The blood-native van der Laan signature separates FASD
   from control strongly (AUC 0.93 discovery / 0.96 replication; Cohen's d 2.6 /
-  3.2) — but see the non-independence caveat below: this is likely an upper bound.
-  The buccal-derived signatures (independent of these cohorts) transfer poorly to
-  blood (AUC 0.68–0.79, d 0.7–1.2). Separation is weaker for milder cases across
-  all signatures.
+  3.2) — but this is **not independent validation**: the corresponding author has
+  confirmed that these cohorts were part of the 2025 signature's derivation cohort
+  (see caveat below), so the figure is circular and should be read as an upper
+  bound only. The buccal-derived signatures (genuinely independent of these
+  cohorts) transfer poorly to blood (AUC 0.68–0.79, d 0.7–1.2). Separation is
+  weaker for milder cases across all signatures.
 - **C2 (stability).** Nested signatures agree almost perfectly (Spearman 0.96),
   but this is largely by construction; the independent cross-tissue pair agrees
   only moderately (0.38). Shared-probe overlap should not be mistaken for
@@ -248,15 +250,33 @@ with EpiDISH (RPC, DHS blood reference) as a confound check.
 
 The corresponding author of van der Laan et al. 2025 (Peter Henneman, Amsterdam
 UMC) is also the depositor of GSE112987/GSE113012 (PMID 30873861) — the same lab,
-same tissue (blood 450K), overlapping timeframe. Its 93-case FAS cohort is the
-natural superset of the earlier Amsterdam blood FASD samples. Per-sample reuse
-could not be confirmed from the (access-restricted) main text, but **sample
-overlap cannot be excluded**, so van der Laan's strong performance here is likely
-**partly circular** — read it as an upper bound, not clean out-of-sample
-validation. The two findings that do *not* depend on it stand regardless: the
-buccal signatures are genuinely independent of these cohorts and still transfer
-poorly to blood, and the between-signature agreement results (C2/C3, cross-tissue)
-are invariant to which signature scores best.
+same tissue, overlapping timeframe. **Overlap is now confirmed by the corresponding
+author** (P. Henneman, personal communication, July 2026): the earlier 450K cohort
+deposited as GSE112987/GSE113012 (published in *Epigenomics* 2019) was included in
+the cohort used to derive the 2025 episignature, and a substantial number of those
+patients were re-profiled on the EPIC array for the 2025 work; the only additional
+2025 samples came from a collaborator in Spain. In other words the 2025 derivation
+cohort is essentially a **superset of the individuals scored here**.
+
+The circularity is therefore at the **individual** level: the episignature was
+derived on (at least most of) the same people it is scored on above. Note one
+nuance — because many individuals were re-profiled on a *different* platform (EPIC)
+for 2025 while we score the deposited **450K** data, this is same-individual /
+cross-platform overlap rather than reuse of the identical arrays, so the technical
+(batch/array) noise is partly independent. But the signal an episignature exploits
+is the individuals' biology, and that is shared. The AUC 0.93–0.96 is thus **not
+independent validation and should not be reported as such** — it is an upper bound
+reflecting a partly circular, same-individual evaluation.
+
+An exact per-sample overlap count, and whether *any* scored individuals were held
+out of the 2025 derivation (training and CpG selection), remain to be confirmed;
+absent a clean held-out subset, no independent AUC can be computed on these cohorts
+(see follow-up in progress).
+
+The two findings that do *not* depend on any of this stand regardless: the buccal
+signatures are genuinely independent of these cohorts and still transfer poorly to
+blood, and the between-signature agreement results (C2/C3, cross-tissue) are
+invariant to which signature scores best.
 
 ### Key finding
 
@@ -292,9 +312,12 @@ signature shares a lab, tissue, and likely samples with this Amsterdam dataset).
 - [x] FASD directional scoring + EpiDISH cell composition
 - [x] FASD agreement analysis (C1-C4 + cross-tissue + confound checks) and figures
 - [x] Formal writeup (smoking + FASD)
-- [x] Checked van der Laan / Amsterdam-cohort independence — NOT independent
-      (same lab and corresponding author, likely sample overlap; van der Laan
-      performance treated as an upper bound, see caveat above)
+- [x] Checked van der Laan / Amsterdam-cohort independence — NOT independent;
+      overlap CONFIRMED by corresponding author (P. Henneman, pers. comm.,
+      Jul 2026): these cohorts were part of the 2025 derivation cohort, many
+      individuals re-profiled on EPIC; van der Laan AUC is an upper bound only
+- [ ] Follow-up to Henneman: exact per-sample overlap (GSM ↔ 2025 role), whether
+      any scored individuals were held out of derivation, and Spanish-collaborator
+      contact / data availability (to attempt an independent held-out AUC)
 - [ ] Extension to air pollution or stress methylation datasets
-- [ ] (Optional) obtain van der Laan per-sample list to quantify exact overlap
 - [ ] (Optional) published-direction concordance (re-parse supplementary Δβ tables)
